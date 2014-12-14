@@ -180,7 +180,7 @@ hljs.initHighlightingOnLoad();
 <body>
 <h1>Reproducible Research: Peer Assessment 1</h1>
 
-<p>Created by Daniel Erzse on November 16, 2014</p>
+<p>Created by Daniel Erzse (updated on December 14, 2014)</p>
 
 <h3>Basic settings</h3>
 
@@ -190,7 +190,7 @@ options(scipen = 1)  # Turn off scientific notations for numbers
 
 <h3>Loading and preprocessing the data</h3>
 
-<pre><code class="r">#load data from archive
+<pre><code class="r"># load data from archive
 unzip(&quot;activity.zip&quot;)
 df &lt;- read.csv(&quot;activity.csv&quot;, colClasses = c(&quot;integer&quot;, &quot;Date&quot;, &quot;factor&quot;))
 summary(df)
@@ -206,8 +206,8 @@ summary(df)
 ##  NA&#39;s   :2304                          (Other):17202
 </code></pre>
 
-<pre><code class="r"># cleaning the data
-df$month &lt;- as.numeric(format(df$date, &quot;%m&quot;)) # adding a month column to the table
+<pre><code class="r"># process/transform the data into more suitable format for analysis, cleaning the data
+df$month &lt;- as.numeric(format(df$date, &quot;%m&quot;)) # we are adding a month column to the table
 cdf &lt;- na.omit(df)  # cdf is the clean data frame
 dim(cdf)
 </code></pre>
@@ -227,12 +227,6 @@ dim(cdf)
 ## 294     0 2012-10-02       25    10
 </code></pre>
 
-<pre><code class="r">library(ggplot2)
-</code></pre>
-
-<pre><code>## Warning: package &#39;ggplot2&#39; was built under R version 3.0.3
-</code></pre>
-
 <h3>What is mean total number of steps taken per day?</h3>
 
 <p>For this part of the assignment, you can ignore the missing values in the dataset.</p>
@@ -240,6 +234,12 @@ dim(cdf)
 <ul>
 <li>Make a histogram of the total number of steps taken each day.</li>
 </ul>
+
+<pre><code class="r">library(ggplot2)
+</code></pre>
+
+<pre><code>## Warning: package &#39;ggplot2&#39; was built under R version 3.0.3
+</code></pre>
 
 <pre><code class="r">ggplot(cdf, aes(date, steps)) + geom_bar(stat = &quot;identity&quot;, colour = &quot;red&quot;, fill = &quot;red&quot;, width = 0.6) + facet_grid(. ~ month, scales = &quot;free&quot;) + labs(title = &quot;Daily Total Number of Steps Taken&quot;, x = &quot;Date&quot;, y = &quot;Number of Steps&quot;) 
 </code></pre>
@@ -309,7 +309,7 @@ ggplot(AverageSteps, aes(interval, AvgStepsMean)) + geom_line(color = &quot;red&
 <li>Devise a strategy for filling in all of the missing values in the dataset. The strategy does not need to be sophisticated. For example, you could use the mean/median for that day, or the mean for that 5-minute interval, etc.</li>
 </ul>
 
-<p>My strategy is to use the mean for that 5-minute interval to fill each NA value in the steps column.</p>
+<p>The strategy adopted is to use the mean for that 5-minute interval to fill each NA value in the steps column.</p>
 
 <ul>
 <li>Create a new dataset that is equal to the original dataset but with the missing data filled in.</li>

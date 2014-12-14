@@ -1,6 +1,6 @@
 Reproducible Research: Peer Assessment 1
 ==========================================
-Created by Daniel Erzse on November 16, 2014
+Created by Daniel Erzse (updated on December 14, 2014)
 
 ### Basic settings
 
@@ -12,7 +12,7 @@ options(scipen = 1)  # Turn off scientific notations for numbers
 ### Loading and preprocessing the data
 
 ```r
-#load data from archive
+# load data from archive
 unzip("activity.zip")
 df <- read.csv("activity.csv", colClasses = c("integer", "Date", "factor"))
 summary(df)
@@ -31,8 +31,8 @@ summary(df)
 
 
 ```r
-# cleaning the data
-df$month <- as.numeric(format(df$date, "%m")) # adding a month column to the table
+# process/transform the data into more suitable format for analysis, cleaning the data
+df$month <- as.numeric(format(df$date, "%m")) # we are adding a month column to the table
 cdf <- na.omit(df)	# cdf is the clean data frame
 dim(cdf)
 ```
@@ -55,6 +55,12 @@ head(cdf)
 ## 294     0 2012-10-02       25    10
 ```
 
+
+### What is mean total number of steps taken per day?
+For this part of the assignment, you can ignore the missing values in the dataset.
+
+* Make a histogram of the total number of steps taken each day.
+
 ```r
 library(ggplot2)
 ```
@@ -62,12 +68,6 @@ library(ggplot2)
 ```
 ## Warning: package 'ggplot2' was built under R version 3.0.3
 ```
-
-
-### What is mean total number of steps taken per day?
-For this part of the assignment, you can ignore the missing values in the dataset.
-
-* Make a histogram of the total number of steps taken each day.
 
 ```r
 ggplot(cdf, aes(date, steps)) + geom_bar(stat = "identity", colour = "red", fill = "red", width = 0.6) + facet_grid(. ~ month, scales = "free") + labs(title = "Daily Total Number of Steps Taken", x = "Date", y = "Number of Steps") 
@@ -136,7 +136,7 @@ sum(is.na(df))
 
 * Devise a strategy for filling in all of the missing values in the dataset. The strategy does not need to be sophisticated. For example, you could use the mean/median for that day, or the mean for that 5-minute interval, etc.
 
-My strategy is to use the mean for that 5-minute interval to fill each NA value in the steps column.
+The strategy adopted is to use the mean for that 5-minute interval to fill each NA value in the steps column.
 
 * Create a new dataset that is equal to the original dataset but with the missing data filled in.
 
